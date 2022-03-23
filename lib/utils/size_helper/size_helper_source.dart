@@ -17,10 +17,10 @@ class SizeHelper {
     this._printScreenInfo,
   );
 
-  double _currentLength;
-  Size _size;
-  Orientation _currentOrientation;
-  bool _printScreenInfo;
+  final double _currentLength;
+  final Size _size;
+  final Orientation _currentOrientation;
+  final bool _printScreenInfo;
 
   static double? _oldLength;
   static Orientation? _oldOrientation;
@@ -82,13 +82,14 @@ class SizeHelper {
     _oldOrientation = _currentOrientation;
     _cachedBreakPointsList = closestBreakPoints;
 
-    if (_printScreenInfo)
+    if (_printScreenInfo) {
       _printCurrentScreenInfo(
         currentLength: _currentLength,
         closestBreakPoint: closestBreakPoints.first,
         size: _size,
         isPortrait: isPortrait,
       );
+    }
 
     final portraitMap = {
       if (mobileSmall != null) BreakPoint.mobileSmall: mobileSmall,
@@ -142,11 +143,12 @@ class SizeHelper {
       landscapeMap,
     );
 
-    if (closestItem != null)
+    if (closestItem != null) {
       return closestItem;
-    else
+    } else {
       throw Exception(
           'Screen size not specified or there is no options passed from the parameters [currentLength: `$_currentLength`, orientation: `$_currentOrientation`]');
+    }
   }
 
   /// Takes `T Function(double width, double height)` as a parameter
@@ -187,13 +189,14 @@ class SizeHelper {
     _oldOrientation = _currentOrientation;
     _cachedBreakPointsList = closestBreakPoints;
 
-    if (_printScreenInfo)
+    if (_printScreenInfo) {
       _printCurrentScreenInfo(
         currentLength: _currentLength,
         closestBreakPoint: closestBreakPoints.first,
         size: _size,
         isPortrait: isPortrait,
       );
+    }
 
     final portraitMap = {
       if (mobileSmall != null) BreakPoint.mobileSmall: mobileSmall,
@@ -255,9 +258,10 @@ class SizeHelper {
           orientation: _currentOrientation,
         ),
       );
-    } else
+    } else {
       throw Exception(
           'Screen size not specified or there is no options passed from the parameters [currentLength: `$_currentLength`, orientation: `$_currentOrientation`]');
+    }
   }
 
   T? _findClosest<T>(
@@ -270,8 +274,7 @@ class SizeHelper {
         ? _findClosestFromMap(portraitMap, closestBreakPoints)
         : _findClosestFromMap(landscapeMap, closestBreakPoints);
 
-    if (closest == null)
-      closest = !isPortrait
+    closest ??= !isPortrait
           ? _findClosestFromMap(portraitMap, closestBreakPoints)
           : _findClosestFromMap(landscapeMap, closestBreakPoints);
 
@@ -313,11 +316,12 @@ class SizeHelper {
 
   String _differenceBetweenCurrentAndBreakPoint(
       double currentLength, double breakPointValue) {
-    if (currentLength > breakPointValue)
+    if (currentLength > breakPointValue) {
       return '+';
-    else if (currentLength == breakPointValue)
+    } else if (currentLength == breakPointValue) {
       return '=';
-    else
+    } else {
       return '-';
+    }
   }
 }
