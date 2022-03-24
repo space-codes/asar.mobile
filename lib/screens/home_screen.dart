@@ -1,56 +1,65 @@
-import 'package:asar_app/utils/localization/language_model.dart';
-import 'package:asar_app/utils/localization/translate_fun.dart';
+import 'package:asar_app/screens/camera_screen.dart';
+import 'package:asar_app/data/models/language_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'register_screen.dart';
 
 String? localLanguageCode;
 
 class HomeScreen extends StatefulWidget {
-  final Locale? locale;
+  const HomeScreen({Key? key}) : super(key: key);
 
-  const HomeScreen({Key? key, this.locale}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _select(Language? language) async {
-    Language? _selectedLanguage;
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      _selectedLanguage = language;
-      sharedPreferences.setString("localLanguage", language!.code);
-    });
-    print(sharedPreferences.getString("localLanguage"));
-  }
+
 
   @override
   void initState() {
     super.initState();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translateHere(context , "home_title")!),
+        title: Text("home_title".tr()),
+        actions: <Widget>[
+          PopupMenuButton<Language>(
+            icon: const Icon(Icons.language),
+            onSelected: (val){
+              setState(() {
+                EasyLocalization.of(context)!.setLocale(Locale(val.code));
+              });
+            },
+            itemBuilder: (BuildContext context) {
+              return Language.getListOfLanguages().map((Language language) {
+                return PopupMenuItem<Language>(
+                  value: language,
+                  child: Text(language.name),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              translateHere(context, "home_title")!,
+              "home_title".tr(),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                    MaterialPageRoute(builder: (context) =>  CameraExampleHome()));
               },
-              child: Text(translateHere(context, "register_title")!),
+              child: Text("register_title".tr()),
             )
           ],
         ),
