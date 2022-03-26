@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) =>  CropSample()));
+                    MaterialPageRoute(builder: (context) =>  const Camera()));
               },
               child: Text("register_title".tr()),
             )

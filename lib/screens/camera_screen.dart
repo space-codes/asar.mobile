@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 import '../utils/navigation_funs.dart';
+import 'crop_screen.dart';
 import 'image_screen.dart';
 
 class Camera extends StatefulWidget {
@@ -35,11 +36,14 @@ class _CameraState extends State<Camera> {
             ElevatedButton(onPressed: () async {
               final XFile? image = await _picker.pickImage(source: ImageSource.camera);
               _imageFile = image;
-              normalShift(context, ImageScreen(image: image,));
+              normalShift(context, CropScreen(image: image,));
+              print(image!.path.toString());
+              //normalShift(context, ImageScreen(image: image,));
             }, child: const Text("Camera")),
             ElevatedButton(onPressed: () async {
               final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-              normalShift(context, ImageScreen(image: image,));
+              normalShift(context, CropScreen(image: image,));
+              //normalShift(context, ImageScreen(image: image,));
             }, child: const Text("Gallery")),
           ],
         ),
