@@ -1,9 +1,12 @@
 import 'package:asar_app/screens/camera_screen.dart';
 import 'package:asar_app/data/models/language_model.dart';
 import 'package:asar_app/screens/crop_screen.dart';
+import 'package:asar_app/screens/test.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'test2.dart';
 
 String? localLanguageCode;
 
@@ -58,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) =>  const Camera()));
+                    MaterialPageRoute(builder: (context) =>  const MyApptwo()));
               },
               child: Text("register_title".tr()),
             )

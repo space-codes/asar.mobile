@@ -42,7 +42,10 @@ dependencies:
   video_player: ^2.3.0
   easy_localization: ^3.0.0
   image_picker: ^0.8.4+11
+  image_crop: ^0.4.0
   crop_your_image: ^0.7.2
+  flutter_easyloading: ^3.0.3
+  image_cropping: ^0.0.11
 
 dev_dependencies:
   flutter_test:
