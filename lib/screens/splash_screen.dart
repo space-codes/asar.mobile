@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:asar_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -24,12 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Color(0xff667EEA), Color(0xff64B6FF)]),
-        ),
-        child: const Text("Welcome"),
+      body: Center(
+        child: SvgPicture.asset("assets/images/logo.svg"),
       ),
     );
   }
