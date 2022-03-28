@@ -1,4 +1,24 @@
 {
+  "-" : "------------Login Screen-----------",
+  "welcome_back": "Welcome back!",
+  "login_message": "Login to your current account",
+  "email_text" : "Email",
+  "password_text" : "Password",
+  "forget_password": "Forget password?",
+  "login": "Login",
+  "login_by" : "Or login by",
+  "facebook" : "Facebook",
+  "gmail": "Gmail",
+  "don't_have_account" : "Don't have account?",
+  "sign_up": "Sign up",
+
+  "--" : "------------Register Screen-----------",
+  "register_title": "Home",
+
+  "---" : "------------Home Screen-----------",
   "home_title": "Home",
-  "register_title": "Register"
+
+
+
+
 }
