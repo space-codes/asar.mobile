@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/screens/register_screen.dart';
+import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:asar_app/widgets/media_button.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -109,28 +111,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 40,
                 ),
-                Center(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: "don't_have_account".tr(),
-                        style: TextStyle(
-                            color: grayColor,
-                            fontSize: 15,
-                            fontFamily: "DinReg",
-                            fontWeight: FontWeight.w600)),
-                    TextSpan(text: "  "),
-                    TextSpan(
-                        text: "sign_up".tr(),
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: secondColor,
-                          fontSize: 15,
-                          fontFamily: "DinReg",
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ])),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("don't_have_account".tr() ,style: TextStyle(
+                        color: grayColor,
+                        fontSize: 15,
+                        fontFamily: "DinReg",
+                        fontWeight: FontWeight.w600) ),
+                    SizedBox(width: 10,),
+                    GestureDetector(
+                      onTap:() {
+                        normalShift(context, RegisterScreen());
+                      },
+                      child: Text("sign_up".tr() ,style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: secondColor,
+                        fontSize: 15,
+                        fontFamily: "DinReg",
+                        fontWeight: FontWeight.w600,
+                      ) ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

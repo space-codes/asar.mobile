@@ -12,8 +12,12 @@
   "don't_have_account" : "Don't have account?",
   "sign_up": "Sign up",
 
+
   "--" : "------------Register Screen-----------",
-  "register_title": "Home",
+  "create_new_acc": "Create new account",
+  "register_message": "Enter the following data ton create the new account",
+  "create": "Create",
+  "register_by" : "Or create by",
 
   "---" : "------------Home Screen-----------",
   "home_title": "Home",

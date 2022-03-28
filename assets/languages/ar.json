@@ -14,7 +14,10 @@
 
 
   "--" : "------------Register Screen-----------",
-  "register_title": "Home",
+  "create_new_acc": "انشاء حساب جديد",
+  "register_message": "قم بادخال البيانات التالية لانشاء حساب جديد",
+  "create": "انشاء",
+  "register_by" : "أو انشئ بواسطة",
 
   "---" : "------------Home Screen-----------",
   "home_title": "Home"
