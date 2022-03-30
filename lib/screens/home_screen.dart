@@ -1,8 +1,11 @@
 import 'package:asar_app/constants/colors.dart';
 import 'package:asar_app/data/models/language_model.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
+import 'package:asar_app/widgets/button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/my_bottom_sheet.dart';
 
 String? localLanguageCode;
 
@@ -57,35 +60,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(top: 15),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: 100, maxHeight: 120),
-                  child: Container(
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add_a_photo, color: Colors.white),
-                          SizedBox(
-                            width: 11,
-                          ),
-                          Text(
-                            "add_manuscript".tr(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: adaptiveTextSize.getAdaptiveTextSize(
-                                    22, context)),
-                          ),
-                        ],
+                  child: GestureDetector(
+                    onTap: () {
+                      showMyBottomSheet(context: context , width: width , height: height);
+                    },
+                    child: Container(
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo, color: Colors.white),
+                            SizedBox(
+                              width: 11,
+                            ),
+                            Text(
+                              "add_manuscript".tr(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: adaptiveTextSize
+                                      .getAdaptiveTextSize(22, context)),
+                            ),
+                          ],
+                        ),
                       ),
+                      height: height * 0.19,
+                      decoration: BoxDecoration(
+                          color: mainColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: mainColor.withOpacity(0.5),
+                                blurRadius: 4,
+                                spreadRadius: 2)
+                          ]),
                     ),
-                    height: height * 0.19,
-                    decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              color: mainColor.withOpacity(0.5),
-                              blurRadius: 4,
-                              spreadRadius: 2)
-                        ]),
                   ),
                 ),
               ),
@@ -113,60 +121,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ConstrainedBox(
-                            constraints:
-                                BoxConstraints(minHeight: 100, maxHeight: 120),
-                            child: Container(
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Flexible(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                    "assets/images/manuscript.jpg",
-                                                  ),
-                                                  fit: BoxFit.cover),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
+                          child: GestureDetector(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  minHeight: 100, maxHeight: 120),
+                              child: Container(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                      "assets/images/manuscript.jpg",
+                                                    ),
+                                                    fit: BoxFit.cover),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                          ),
+                                          flex: 1,
                                         ),
-                                        flex: 1,
-                                      ),
-                                      SizedBox(
-                                        width: 11,
-                                      ),
-                                      Flexible(
-                                        flex: 2,
-                                        child: Container(
-                                          child: Text(
-                                            "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.",
-                                            style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                                color: Colors.black,
-                                                fontSize: adaptiveTextSize
-                                                    .getAdaptiveTextSize(
-                                                        15, context)),maxLines: 5,
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        Flexible(
+                                          flex: 2,
+                                          child: Container(
+                                            child: Text(
+                                              "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color: Colors.black,
+                                                  fontSize: adaptiveTextSize
+                                                      .getAdaptiveTextSize(
+                                                          15, context)),
+                                              maxLines: 5,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
+                                height: height * 0.19,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 3,
+                                          spreadRadius: 1)
+                                    ]),
                               ),
-                              height: height * 0.19,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 3,
-                                        spreadRadius: 1)
-                                  ]),
                             ),
                           ),
                         );
