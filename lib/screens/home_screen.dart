@@ -1,11 +1,13 @@
 import 'package:asar_app/constants/colors.dart';
 import 'package:asar_app/data/models/language_model.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
+import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:asar_app/widgets/button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/my_bottom_sheet.dart';
+import 'details_screen.dart';
 
 String? localLanguageCode;
 
@@ -122,6 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
+                              onTap: (){
+                                normalShift(context, DetailsScreen());
+                              },
                             child: ConstrainedBox(
                               constraints: BoxConstraints(
                                   minHeight: 100, maxHeight: 120),
