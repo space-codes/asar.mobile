@@ -20,10 +20,7 @@
   "register_by" : "Or create by",
 
   "---" : "------------Home Screen-----------",
-  "home_title": "Home"
-
-
-
-
-
+  "home_title": "Home",
+  "add_manuscript" : "Add manuscript",
+  "history": "History"
 }
