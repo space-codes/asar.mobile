@@ -1,15 +1,16 @@
-import 'dart:ui';
-
 import 'package:asar_app/constants/colors.dart';
-import 'package:asar_app/screens/register_screen.dart';
+import 'package:asar_app/screens/home_screen.dart';
+import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/utils/navigation_funs.dart';
-import 'package:asar_app/widgets/media_button.dart';
+import 'package:asar_app/widgets/row_of_create_acc.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/button.dart';
+import '../widgets/row_of_register_by.dart';
+import '../widgets/row_of_register_by_google_and_facebook.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,40 +20,61 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  AdaptiveTextSize adaptiveTextSize = AdaptiveTextSize();
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 45,),
-                Center(child: SvgPicture.asset("assets/images/logo.svg")),
                 SizedBox(
-                  height: 25,
+                  height: height * 0.06,
+                ),
+                Center(
+                    child: SvgPicture.asset(
+                  "assets/images/logo.svg",
+                )),
+                SizedBox(
+                  height: height * 0.015,
                 ),
                 Text("welcome_back".tr(),
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                        fontSize:
+                            adaptiveTextSize.getAdaptiveTextSize(25, context),
+                        fontWeight: FontWeight.bold)),
                 SizedBox(
-                  height: 5,
+                  height: height * 0.007,
                 ),
                 Text("login_message".tr(),
-                    style: TextStyle(fontSize: 16, color: grayColor)),
+                    style: TextStyle(
+                        fontSize:
+                            adaptiveTextSize.getAdaptiveTextSize(16, context),
+                        color: grayColor)),
                 SizedBox(
-                  height: 20,
+                  height: height * 0.030,
                 ),
-                myTextFormField(labelText: "email_text"),
+                myTextFormField(
+                    labelText: "email_text",
+                    height: height * 0.065,
+                    context: context),
                 SizedBox(
-                  height: 20,
+                  height: height * 0.022,
                 ),
-                myTextFormField(labelText: "password_text"),
+                myTextFormField(
+                    labelText: "password_text",
+                    height: height * 0.065,
+                    context: context),
                 SizedBox(
-                  height: 15,
+                  height: height * 0.018,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -60,80 +82,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text("forget_password".tr(),
                         style: TextStyle(
                             color: secondColor,
-                            fontSize: 15,
+                            fontSize: adaptiveTextSize.getAdaptiveTextSize(
+                                15, context),
                             fontWeight: FontWeight.w600)),
                   ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: height * 0.018,
                 ),
-                myButton(onPressed: () {}, title: "login"),
+                GestureDetector(
+                    onTap: () {
+                      normalShift(context, HomeScreen());
+                    },
+                    child: myButton(
+                        onPressed: () {}, title: "login", context: context)),
                 SizedBox(
-                  height: 20,
+                  height: height * 0.025,
                 ),
-                Row(
-                  children: [
-                    Flexible(
-                        flex: 1, child: Container(color: mainColor, height: 1)),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text("login_by".tr(), style: TextStyle(
-                        color: mainColor , fontSize: 15 , fontWeight: FontWeight.w600
-                      ),),
-                    ),
-                    Flexible(
-                        flex: 1, child: Container(color: mainColor, height: 1)),
-                  ],
-                ),
+                rowOfRegisterBy(context: context, title: "login_by"),
                 SizedBox(
-                  height: 15,
+                  height: height * 0.025,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Flexible(
-                      flex: 5,
-                      child: myMediaButton(
-                          onPressed: () {},
-                          title: "gmail",
-                          imagePath: "assets/images/Google__G__Logo.svg"),
-                    ),
-                    Flexible(flex: 2, child: SizedBox()),
-                    Flexible(
-                      flex: 5,
-                      child: myMediaButton(
-                          onPressed: () {},
-                          title: "facebook",
-                          imagePath: "assets/images/facebook.svg"),
-                    ),
-                  ],
-                ),
+                rowOfRegisterByGoogleAndFacebook(context: context),
                 SizedBox(
-                  height: 40,
+                  height: height * 0.035,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("don't_have_account".tr() ,style: TextStyle(
-                        color: grayColor,
-                        fontSize: 15,
-                        fontFamily: "DinReg",
-                        fontWeight: FontWeight.w600) ),
-                    SizedBox(width: 10,),
-                    GestureDetector(
-                      onTap:() {
-                        normalShift(context, RegisterScreen());
-                      },
-                      child: Text("sign_up".tr() ,style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: secondColor,
-                        fontSize: 15,
-                        fontFamily: "DinReg",
-                        fontWeight: FontWeight.w600,
-                      ) ),
-                    ),
-                  ],
-                ),
+                rowOfCreateAccount(context: context),
               ],
             ),
           ),
