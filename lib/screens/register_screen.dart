@@ -56,18 +56,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: height * 0.03,
                 ),
-                myTextFormField(
+                CustomTextFormField(
                     labelText: "email_text",
                     height: height * 0.065,
-                    context: context),
+                    ),
                 SizedBox(
                   height: height * 0.02,
                 ),
-                myTextFormField(
+                CustomTextFormField(
                     labelText: "password_text",
                     height: height * 0.065,
-                    context: context,
-                    isPassword: true),
+                    ),
                 SizedBox(
                   height: height * 0.03,
                 ),

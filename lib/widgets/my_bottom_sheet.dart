@@ -1,12 +1,7 @@
-import 'dart:io';
-
-import 'package:asar_app/constants/colors.dart';
-import 'package:asar_app/screens/result_screen.dart';
-import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import '../functions/crop_image.dart';
 
 showMyBottomSheet({double? width, double? height, BuildContext? context}) {
   showModalBottomSheet(
@@ -68,44 +63,3 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
       });
 }
 
-cropImage({String? filePath,
-  XFile? imageFile,
-  Function? function,
-  BuildContext? context}) async {
-  File? croppedFile = await ImageCropper()
-      .cropImage(
-      sourcePath: imageFile!.path,
-      aspectRatioPresets: Platform.isAndroid
-          ? [
-        CropAspectRatioPreset.original,
-      ]
-          : [
-        CropAspectRatioPreset.original,
-      ],
-      androidUiSettings: AndroidUiSettings(
-          toolbarTitle: "Medad",
-          toolbarColor: mainColor,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          hideBottomControls: true,
-          lockAspectRatio: false),
-      iosUiSettings: IOSUiSettings(
-        title: 'مداد',
-      ))
-      .then((value) {
-    normalShift(
-        context!,
-        ResultScreen(
-          image: value,
-        ));
-    print("-------------------------------------------------------------------")
-    print(value!.path);
-    print("-------------------------------------------------------------------")
-  });
-  if (croppedFile != null) {
-    imageFile = croppedFile as XFile;
-    function;
-  }
-
-  return croppedFile;
-}

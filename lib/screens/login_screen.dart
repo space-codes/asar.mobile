@@ -66,18 +66,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: height * 0.030,
                   ),
-                  myTextFormField(
+                  CustomTextFormField(
                       labelText: "email_text",
                       height: height * 0.065,
-                      context: context),
+                      ),
                   SizedBox(
                     height: height * 0.022,
                   ),
-                  myTextFormField(
+                  CustomTextFormField(
                       labelText: "password_text",
                       height: height * 0.065,
-                      context: context,
-                      isPassword: true),
+                      ),
                   SizedBox(
                     height: height * 0.018,
                   ),
