@@ -34,7 +34,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: height * 0.09,
                 ),
-                Center(child: SvgPicture.asset("assets/images/logo.svg")),
+                Center(
+                    child: SvgPicture.asset("assets/images/logo.svg",
+                        height: height * 0.22)),
                 SizedBox(
                   height: height * 0.04,
                 ),
@@ -64,7 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 myTextFormField(
                     labelText: "password_text",
                     height: height * 0.065,
-                    context: context),
+                    context: context,
+                    isPassword: true),
                 SizedBox(
                   height: height * 0.03,
                 ),

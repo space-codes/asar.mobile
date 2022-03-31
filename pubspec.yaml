@@ -38,15 +38,8 @@ dependencies:
   shared_preferences: ^2.0.12
   flutter_svg: ^1.0.3
   easy_localization: ^3.0.0
-  camera: ^0.9.4+16
-  path: ^1.8.0
-  path_provider: ^2.0.9
-  video_player: ^2.3.0
   image_picker: ^0.8.4+11
-  image_crop: ^0.4.0
-  crop_your_image: ^0.7.2
   flutter_easyloading: ^3.0.3
-  image_cropping: ^0.0.11
   image_cropper: ^1.5.0
 
 dev_dependencies:

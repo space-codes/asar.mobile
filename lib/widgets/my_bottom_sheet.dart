@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/screens/result_screen.dart';
+import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -17,7 +19,7 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
       builder: (ctx) {
         return StatefulBuilder(
           builder:
-              (BuildContext context, void Function(void Function()) setState) {
+              (BuildContext cxt, void Function(void Function()) setState) {
             return Container(
               width: width,
               height: height! * 0.2,
@@ -34,7 +36,8 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
                         Navigator.pop(context);
                         ImagePicker()
                             .pickImage(source: ImageSource.camera)
-                            .then((value) => cropImage(
+                            .then((value) =>
+                            cropImage(
                                 filePath: value!.path.toString(),
                                 function: setState,
                                 imageFile: value,
@@ -48,7 +51,8 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
                         Navigator.pop(context);
                         ImagePicker()
                             .pickImage(source: ImageSource.gallery)
-                            .then((value) => cropImage(
+                            .then((value) =>
+                            cropImage(
                                 filePath: value!.path.toString(),
                                 function: setState,
                                 imageFile: value,
@@ -64,20 +68,20 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
       });
 }
 
-cropImage(
-    {String? filePath,
-    XFile? imageFile,
-    Function? function,
-    BuildContext? context}) async {
-  File? croppedFile = await ImageCropper().cropImage(
+cropImage({String? filePath,
+  XFile? imageFile,
+  Function? function,
+  BuildContext? context}) async {
+  File? croppedFile = await ImageCropper()
+      .cropImage(
       sourcePath: imageFile!.path,
       aspectRatioPresets: Platform.isAndroid
           ? [
-              CropAspectRatioPreset.original,
-            ]
+        CropAspectRatioPreset.original,
+      ]
           : [
-              CropAspectRatioPreset.original,
-            ],
+        CropAspectRatioPreset.original,
+      ],
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: "Medad",
           toolbarColor: mainColor,
@@ -87,7 +91,17 @@ cropImage(
           lockAspectRatio: false),
       iosUiSettings: IOSUiSettings(
         title: 'مداد',
-      ));
+      ))
+      .then((value) {
+    normalShift(
+        context!,
+        ResultScreen(
+          image: value,
+        ));
+    print("-------------------------------------------------------------------")
+    print(value!.path);
+    print("-------------------------------------------------------------------")
+  });
   if (croppedFile != null) {
     imageFile = croppedFile as XFile;
     function;
