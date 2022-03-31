@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CropScreen extends StatefulWidget {
+class MyPage extends StatefulWidget {
   @override
-  _CropScreenState createState() => _CropScreenState();
+  _MyPageState createState() => _MyPageState();
 }
 
-class _CropScreenState extends State<CropScreen> {
+class _MyPageState extends State<MyPage> {
   /// Variables
   XFile? imageFile;
 
@@ -61,9 +61,9 @@ class _CropScreenState extends State<CropScreen> {
   /// Crop Image
   _cropImage(filePath) async {
     File? croppedImage = await ImageCropper().cropImage(
-        sourcePath: filePath,
-        maxWidth: 1080,
-        maxHeight: 1080,
+      sourcePath: filePath,
+      maxWidth: 1080,
+      maxHeight: 1080,
         compressQuality:50
     );
     if (croppedImage != null) {

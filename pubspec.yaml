@@ -47,6 +47,7 @@ dependencies:
   crop_your_image: ^0.7.2
   flutter_easyloading: ^3.0.3
   image_cropping: ^0.0.11
+  image_cropper: ^1.5.0
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,4 @@
 import 'package:asar_app/constants/colors.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/adaptive_text_size.dart';
@@ -27,10 +26,15 @@ class DetailsScreen extends StatelessWidget {
                           fit: BoxFit.cover)),
                 ),
                 Positioned(
-                    left: Localizations.localeOf(context).languageCode == "ar" ? null : 15,
-                    right: Localizations.localeOf(context).languageCode == "ar" ? 15 : null,
-                    top:  10 ,
-                    child: myBackButton(height: height , width: width , context: context))
+                    left: Localizations.localeOf(context).languageCode == "ar"
+                        ? null
+                        : 15,
+                    right: Localizations.localeOf(context).languageCode == "ar"
+                        ? 15
+                        : null,
+                    top: 10,
+                    child: myBackButton(
+                        height: height, width: width, context: context))
               ],
             ),
             Expanded(

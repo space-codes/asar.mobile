@@ -1,4 +1,5 @@
-
+import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/screens/crop_text.dart';
 import 'package:asar_app/screens/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        title: context.locale == "ar"
+            ? "مداد"
+            : "Medad",
+        color: mainColor,
         theme: ThemeData(fontFamily: "DinReg"),
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: const SplashScreen());
+        home: SplashScreen());
   }
 }
