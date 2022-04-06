@@ -67,16 +67,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: height * 0.030,
                   ),
                   CustomTextFormField(
-                      labelText: "email_text",
-                      height: height * 0.065,
-                      ),
+                    labelText: "user_name",
+                    height: height * 0.065,
+                  ),
                   SizedBox(
                     height: height * 0.022,
                   ),
                   CustomTextFormField(
-                      labelText: "password_text",
-                      height: height * 0.065,
-                      ),
+                    labelText: "password_text",
+                    height: height * 0.065,
+                  ),
                   SizedBox(
                     height: height * 0.018,
                   ),
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              duration: Duration(seconds: 2),
+                                duration: Duration(seconds: 2),
                                 content: Text(
                                   'تم تسجيل الدخول بنجاح',
                                   style: TextStyle(color: Colors.white),
@@ -109,8 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           shiftByReplacement(context, HomeScreen());
                         }
                       },
-                      child: myButton(
-                          onPressed: () {}, title: "login", context: context)),
+                      child: myButton(title: "login", context: context)),
                   SizedBox(
                     height: height * 0.025,
                   ),

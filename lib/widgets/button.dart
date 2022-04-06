@@ -5,22 +5,20 @@ import 'package:flutter/material.dart';
 import '../utils/adaptive_text_size.dart';
 
 Widget myButton(
-    {VoidCallback? onPressed, String? title, BuildContext? context}) {
-  return GestureDetector(
-    child: Container(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(title!.tr(),
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize:
-                      adaptiveTextSize.getAdaptiveTextSize(18, context!))),
-        ),
+    {String? title, BuildContext? context}) {
+  return Container(
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text(title!.tr(),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize:
+                    adaptiveTextSize.getAdaptiveTextSize(18, context!))),
       ),
-      decoration: BoxDecoration(
-          color: mainColor,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
     ),
+    decoration: BoxDecoration(
+        color: mainColor,
+        borderRadius: BorderRadius.all(Radius.circular(10))),
   );
 }

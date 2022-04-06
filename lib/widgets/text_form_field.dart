@@ -7,8 +7,10 @@ import '../utils/adaptive_text_size.dart';
 class CustomTextFormField extends StatefulWidget {
   final String? labelText;
   final double? height;
+  final TextEditingController? textEditingController;
 
-  const CustomTextFormField({Key? key, this.labelText, this.height})
+  const CustomTextFormField(
+      {Key? key, this.labelText, this.height, this.textEditingController})
       : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.textEditingController,
       obscureText: visibility ? true : false,
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -44,7 +47,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       },
       cursorColor: mainColor,
       decoration: InputDecoration(
-          suffixIcon: widget.labelText == "password_text"
+          suffixIcon: widget.labelText == "password_text" ||
+                  widget.labelText == "confirm_password"
               ? InkWell(
                   onTap: () {
                     setState(() {
@@ -75,9 +79,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           enabledBorder: border,
           errorBorder: errorBorder,
           focusedErrorBorder: errorBorder,
-          errorStyle: TextStyle(
-            color: Colors.red
-          ),
+          errorStyle: TextStyle(color: Colors.red),
           focusedBorder: border),
     );
   }
