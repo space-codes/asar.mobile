@@ -11,7 +11,6 @@ import '../utils/navigation_funs.dart';
 import '../widgets/button.dart';
 import 'home_screen.dart';
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -24,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    registrationBloc = BlocProvider.of<RegistrationBloc>(context);
+    //registrationBloc = BlocProvider.of<RegistrationBloc>(context);
     super.initState();
   }
 
@@ -98,12 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  buildBlocBuilder(
-                      _formKey,
-                      userNameController,
-                      passwordController,
-                      confirmPasswordController,
-                      registrationBloc!),
+                  //buildBlocBuilder(_formKey, userNameController, passwordController, confirmPasswordController, registrationBloc!),
                   // myButton(onPressed: () {}, title: "create", context: context),
                   SizedBox(
                     height: height * 0.025,

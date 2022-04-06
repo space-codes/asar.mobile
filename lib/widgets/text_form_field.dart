@@ -34,7 +34,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.textEditingController,
-      obscureText: visibility ? true : false,
+      obscureText: (widget.labelText == "password_text" ||
+          widget.labelText == "confirm_password") && visibility ? true : false,
       validator: (value) {
         if (value == null || value.isEmpty) {
           if (context.locale.languageCode == "ar") {
