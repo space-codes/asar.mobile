@@ -31,10 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: backgroundColor,
       body: Padding(
         padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Form(
-              key: _formKey,
+        child: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

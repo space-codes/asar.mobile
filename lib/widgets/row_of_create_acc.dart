@@ -3,8 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../constants/colors.dart';
+
+
 import '../screens/register_screen.dart';
 import '../utils/navigation_funs.dart';
+
+
+
 
 Widget rowOfCreateAccount({BuildContext? context}) {
   return Row(

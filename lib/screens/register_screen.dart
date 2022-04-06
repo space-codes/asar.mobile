@@ -19,11 +19,15 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  RegistrationBloc? registrationBloc;
+  late RegistrationBloc registrationBloc;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   void initState() {
-    //registrationBloc = BlocProvider.of<RegistrationBloc>(context);
+    registrationBloc = BlocProvider.of<RegistrationBloc>(context);
     super.initState();
   }
 
@@ -31,10 +35,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    final _formKey = GlobalKey<FormState>();
-    TextEditingController userNameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -97,7 +97,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  //buildBlocBuilder(_formKey, userNameController, passwordController, confirmPasswordController, registrationBloc!),
+                  buildBlocBuilder(
+                      _formKey,
+                      userNameController,
+                      passwordController,
+                      confirmPasswordController,
+                      registrationBloc),
                   // myButton(onPressed: () {}, title: "create", context: context),
                   SizedBox(
                     height: height * 0.025,
