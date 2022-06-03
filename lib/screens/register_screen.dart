@@ -1,15 +1,11 @@
-import 'package:asar_app/BLoCs/registration_bloc/registration_bloc.dart';
 import 'package:asar_app/constants/colors.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../utils/navigation_funs.dart';
 import '../widgets/button.dart';
-import 'home_screen.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,7 +15,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  late RegistrationBloc registrationBloc;
   final _formKey = GlobalKey<FormState>();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -27,7 +22,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    registrationBloc = BlocProvider.of<RegistrationBloc>(context);
     super.initState();
   }
 
@@ -97,13 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  buildBlocBuilder(
-                      _formKey,
-                      userNameController,
-                      passwordController,
-                      confirmPasswordController,
-                      registrationBloc),
-                  // myButton(onPressed: () {}, title: "create", context: context),
+                  GestureDetector(child: myButton(title: "create", context: context)),
                   SizedBox(
                     height: height * 0.025,
                   ),
@@ -119,48 +107,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  BlocBuilder<RegistrationBloc, RegistrationState> buildBlocBuilder(
-      GlobalKey<FormState> _formKey,
-      TextEditingController userNameController,
-      TextEditingController passwordController,
-      TextEditingController confirmPasswordController,
-      RegistrationBloc registrationBloc) {
-    return BlocBuilder<RegistrationBloc, RegistrationState>(
-        builder: (cxt, state) {
-      return GestureDetector(
-        onTap: () {
-          if (_formKey.currentState!.validate()) {
-            registrationBloc.add(RegisterEvent(
-                userName: userNameController.text,
-                password: passwordController.text,
-                confirmPassword: confirmPasswordController.text));
-
-            if (state == RegisterLoading) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    duration: Duration(seconds: 2),
-                    content: Text(
-                      "loading",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: mainColor),
-              );
-              shiftByReplacement(context, HomeScreen());
-            } else if (state == RegisterError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    duration: Duration(seconds: 2),
-                    content: Text(
-                      'تم تسجيل الدخول بنجاح',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red),
-              );
-            }
-          }
-        },
-        child: myButton(title: "create", context: context),
-      );
-    });
-  }
 }
