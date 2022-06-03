@@ -15,7 +15,7 @@ class RegisterLoading extends RegistrationState {
 }
 
 class RegisterLoaded extends RegistrationState {
-  final RegisterRequestModel registerModel;
+  final DefaultResponse registerModel;
 
   const RegisterLoaded(this.registerModel);
 

@@ -1,3 +1,4 @@
+import 'package:asar_app/data/models/default_response.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -20,8 +21,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
             password: event.password,
             confirmPassword: event.confirmPassword);
         emit(RegisterLoaded(response));
-        if (response.error != null) {
-          emit(RegisterError(response.error));
+        if (response.message != null) {
+          emit(RegisterError(response.message));
         }
       } on NetworkError {
         emit(const RegisterError(

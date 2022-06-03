@@ -23,7 +23,7 @@ cropImage({String? filePath,
         CropAspectRatioPreset.original,
       ],
       androidUiSettings: AndroidUiSettings(
-          toolbarTitle: "مداد",
+          toolbarTitle: "أثار",
           toolbarColor: mainColor,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,

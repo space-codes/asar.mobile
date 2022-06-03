@@ -110,14 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       child: myButton(title: "login", context: context)),
+                  SizedBox(height: height * 0.025,),
+                  //rowOfRegisterBy(context: context, title: "login_by"),
                   SizedBox(
                     height: height * 0.025,
                   ),
-                  rowOfRegisterBy(context: context, title: "login_by"),
-                  SizedBox(
-                    height: height * 0.025,
-                  ),
-                  rowOfRegisterByGoogleAndFacebook(context: context),
+                  //rowOfRegisterByGoogleAndFacebook(context: context),
                   SizedBox(
                     height: height * 0.035,
                   ),
