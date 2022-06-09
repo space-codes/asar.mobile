@@ -1,11 +1,15 @@
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/providers/registration_provider.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/button.dart';
+import 'package:provider/provider.dart';
 
+import '../utils/navigation_funs.dart';
+import '../widgets/button.dart';
+import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -29,6 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    final RegistrationProvider? registrationProvider =
+        Provider.of<RegistrationProvider>(context);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -91,7 +98,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  GestureDetector(child: myButton(title: "create", context: context)),
+                  GestureDetector(
+                      onTap: () {
+                        debugPrint("user name -------" +
+                            userNameController.text +
+                            "-------");
+                        debugPrint("password -------" +
+                            passwordController.text +
+                            "-------");
+                        debugPrint("confirmPassword -------" +
+                            confirmPasswordController.text +
+                            "-------");
+
+                        registrationProvider!.register(
+                            userName: userNameController.text,
+                            password: passwordController.text,
+                            confirmPassword: confirmPasswordController.text);
+                        if (_formKey.currentState!.validate() &&
+                            registrationProvider.registerLoading &&
+                            passwordController.text ==
+                                confirmPasswordController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text(
+                                  "${registrationProvider.registerResponse.message.toString()}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: mainColor),
+                          );
+                          shiftByReplacement(context, HomeScreen());
+                        }
+                      },
+                      child: myButton(title: "create", context: context)),
                   SizedBox(
                     height: height * 0.025,
                   ),
@@ -106,5 +145,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
 }

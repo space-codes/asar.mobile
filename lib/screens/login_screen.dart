@@ -7,7 +7,9 @@ import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/registration_provider.dart';
 import '../widgets/button.dart';
 import '../widgets/row_of_register_by.dart';
 import '../widgets/row_of_register_by_google_and_facebook.dart';
@@ -23,10 +25,17 @@ class _LoginScreenState extends State<LoginScreen> {
   AdaptiveTextSize adaptiveTextSize = AdaptiveTextSize();
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    final RegistrationProvider? registrationProvider =
+    Provider.of<RegistrationProvider>(context);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Padding(
@@ -68,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextFormField(
                     labelText: "user_name",
+                    textEditingController: userNameController,
                     height: height * 0.065,
                   ),
                   SizedBox(
@@ -75,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextFormField(
                     labelText: "password_text",
+                    textEditingController: passwordController,
                     height: height * 0.065,
                   ),
                   SizedBox(
@@ -96,12 +107,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        if (_formKey.currentState!.validate()) {
+                        registrationProvider!.login(
+                            userName: userNameController.text,
+                            password: passwordController.text);
+                        if (_formKey.currentState!.validate() && registrationProvider.loginLoading) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                             SnackBar(
                                 duration: Duration(seconds: 2),
                                 content: Text(
-                                  'تم تسجيل الدخول بنجاح',
+                                 registrationProvider.loginResponse.message.toString(),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 backgroundColor: mainColor),
