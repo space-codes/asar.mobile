@@ -19,6 +19,7 @@
   "create": "انشاء",
   "register_by" : "أو انشئ بواسطة",
   "confirm_password" : "تأكيد كلمة المرور",
+  "password_and_confirm_not_matched": "راجع تأكيد كلمة السر من فضلك ",
 
   "---" : "------------Home Screen-----------",
   "home_title": "الصفحة الرئيسية",

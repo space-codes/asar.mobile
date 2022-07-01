@@ -11,8 +11,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/registration_provider.dart';
 import '../widgets/button.dart';
-import '../widgets/row_of_register_by.dart';
-import '../widgets/row_of_register_by_google_and_facebook.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -34,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
 
     final RegistrationProvider? registrationProvider =
-    Provider.of<RegistrationProvider>(context);
+        Provider.of<RegistrationProvider>(context);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -105,26 +103,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: height * 0.018,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        registrationProvider!.login(
-                            userName: userNameController.text,
-                            password: passwordController.text);
-                        if (_formKey.currentState!.validate() && registrationProvider.loginLoading) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(
-                                duration: Duration(seconds: 2),
-                                content: Text(
-                                 registrationProvider.loginResponse.message.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                backgroundColor: mainColor),
-                          );
-                          shiftByReplacement(context, HomeScreen());
-                        }
-                      },
-                      child: myButton(title: "login", context: context)),
-                  SizedBox(height: height * 0.025,),
+                  Consumer<RegistrationProvider>(builder: (context, loginProvider , child){
+                    return GestureDetector(
+                        onTap: () async {
+                          loginProvider.login(
+                              userName: userNameController.text,
+                              password: passwordController.text);
+                          if (_formKey.currentState!.validate() &&
+                              loginProvider.loginLoading) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  duration: Duration(seconds: 2),
+                                  content: Text(
+                                    loginProvider.loginResponse.message
+                                        .toString(),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: mainColor),
+                            );
+                            shiftByReplacement(context, HomeScreen());
+                          }
+                        },
+                        child: myButton(title: "login", context: context));
+                  }),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
                   //rowOfRegisterBy(context: context, title: "login_by"),
                   SizedBox(
                     height: height * 0.025,

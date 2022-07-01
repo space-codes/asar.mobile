@@ -19,6 +19,7 @@
   "create": "Create",
   "register_by" : "Or create by",
   "confirm_password" : "Confirm password",
+  "password_and_confirm_not_matched": "Review password confirmation ,please",
 
   "---" : "------------Home Screen-----------",
   "home_title": "Home",

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: context.locale == "ar" ? "مداد" : "Medad",
+        title: context.locale == "ar" ? "أثار" : "ASAR",
         color: mainColor,
         theme: ThemeData(fontFamily: "DinReg"),
         debugShowCheckedModeBanner: false,

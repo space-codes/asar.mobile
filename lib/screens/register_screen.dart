@@ -100,24 +100,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        debugPrint("user name -------" +
-                            userNameController.text +
-                            "-------");
-                        debugPrint("password -------" +
-                            passwordController.text +
-                            "-------");
-                        debugPrint("confirmPassword -------" +
-                            confirmPasswordController.text +
-                            "-------");
-
                         registrationProvider!.register(
                             userName: userNameController.text,
                             password: passwordController.text,
                             confirmPassword: confirmPasswordController.text);
-                        if (_formKey.currentState!.validate() &&
-                            registrationProvider.registerLoading &&
-                            passwordController.text ==
-                                confirmPasswordController.text) {
+
+                        if (passwordController.text !=
+                            confirmPasswordController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text(
+                                  "password_and_confirm_not_matched".tr(),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: Colors.red),
+                          );
+                        } else if (_formKey.currentState!.validate() &&
+                            registrationProvider.registerLoading) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                                 duration: Duration(seconds: 2),

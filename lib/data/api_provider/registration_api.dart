@@ -6,13 +6,20 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationApiProvider {
-  final Dio _dio = Dio(
-      BaseOptions(baseUrl: baseUrl, headers: {'Content-Type': 'text/plain'} ));
+  final Dio _dio = Dio(BaseOptions(baseUrl: baseUrl, headers: {
+    'Content-Type': 'application/json',
+  }));
 
   Future<DefaultResponse> login(
       {required String password, required String userName}) async {
+    debugPrint("****** From login request model ----> ${userName} ***********");
+
     Response response = await _dio.post('auth/login',
-        data: LoginRequestModel(password: password, username: userName));
+        data:
+            LoginRequestModel(password: password, username: userName).toJson());
+
+    print(await response.data.toString());
+
     if (response.statusCode == 200) {
       print(await response.data.toString());
     } else {
@@ -23,14 +30,16 @@ class RegistrationApiProvider {
 
   Future<DefaultResponse> register(
       {String? password, String? userName, String? confirmPassword}) async {
-
-    debugPrint("****** From register request model ----> ${userName} ***********");
+    debugPrint(
+        "****** From register request model ----> ${userName} ***********");
 
     Response response = await _dio.post("auth/register",
         data: RegisterRequestModel(
-            confirmPassword: confirmPassword,
-            password: password,
-            username: userName).toJson());
+                confirmPassword: confirmPassword,
+                password: password,
+                username: userName)
+            .toJson());
+    print(await response.data.toString());
     if (response.statusCode == 200) {
       print(await response.data.toString());
     } else {
