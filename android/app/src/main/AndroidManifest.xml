@@ -3,7 +3,7 @@
    <application
         android:label="مداد"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap-hdpi/launcher_icon.png">
         <activity
             android:name=".MainActivity"
             android:exported="true"
