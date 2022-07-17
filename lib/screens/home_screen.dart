@@ -1,5 +1,8 @@
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/data/api_provider/api_provider.dart';
+import 'package:asar_app/data/models/home_response.dart';
 import 'package:asar_app/data/models/language_model.dart';
+import 'package:asar_app/screens/login_screen.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,13 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
     "انعمت عليكم و أنى فضلتكم على العا لمين  و اتقو ا يومالاتجزى نفس عن نفس شيئا ولا يقبل منها عذل ولا تنفعها شفا عة ولاهم ينصر ون و ا ذ ابتلى ء برهيم ربه بكلما ت فاتمهن قال اني جا علك للنا س اماماقال ومن ذ ريتى قال لا ينا ل عهدى الظا لمين",
     "وا ركعى مع الرا كعين ء ذلك من انبا الغيب نوخيه اليك و ما كنت لديهم ا ذ يلقون أ قلا مهم أ يهم يكفل مر يم وما كنت لديهم ا ذ يختصمو ا ذ فالت  الملئكة ا مريم  ان الله يبشرك ه بكلمة منه اسمه المسيح عيسى بنن مريم",
     "وهومعه جملة اسمية لامحل لها عطف على احدهما فهو ايضا يعمل عمل فعله تذكرما قلنا فى امثا له نحومعلوم يحب الله تعا اعطا ءله عبده فقير د زهما من مر اد  لفظه مجر و ر تقد ير ا مضا  اليه لنحو و اذا  ا زيد المعنى فيحب فعل مضا رع مرفوغ لفظا بعل معنوى وللجلا لة مر فو عه لفظا فاعله وهومعه جملة فعلية لامحل لها ابتدئية وا عطا ء منصوب لفظا مفعول به ليحب و اللا م خرف جر متعلق باعطا ء والضمير المجر و ر مبنى على الضم فمحله القريب مجرو ر باللا م  ؤمحله البعيد منصوب مفعول له",
-
   ];
+
+  late Future _getData;
+
 
   @override
   void initState() {
+    _getData = _getHomeData();
     super.initState();
     setState(() {});
+  }
+  Future<HomeResponse> _getHomeData() async{
+    return await ApiProvider().home();
   }
 
   @override
@@ -70,6 +79,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   }).toList();
                 },
               ),
+              IconButton(
+                  onPressed: () async {
+                    shiftByReplacement(context, LoginScreen());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          duration: Duration(seconds: 2),
+                          content:  Text(
+                            "error_message".tr(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: mainColor),
+                    );
+                    // await ApiProvider().logout().then((value){
+                    //   shiftByReplacement(context, LoginScreen());
+                    // });
+                  },
+                  icon: Icon(
+                    Icons.logout,
+                    color: Colors.red,
+                  ))
             ],
             leading: SvgPicture.asset("assets/images/logo.svg"),
           ),
@@ -138,83 +167,115 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: height * 0.015,
                 ),
                 Expanded(
-                    child: ListView.builder(
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                normalShift(
-                                    context,
-                                    DetailsScreen(
-                                      imagePath: paths[index],
-                                      text: texts[index],
-                                    ));
-                              },
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                    minHeight: 100, maxHeight: 120),
-                                child: Container(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Flexible(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                        paths[index],
+                  child: FutureBuilder<HomeResponse>(
+                  future: _getHomeData(), // async work
+                  builder: (BuildContext context, AsyncSnapshot<HomeResponse> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting: return Center(
+                        child: CircularProgressIndicator(
+                          color: mainColor,
+                        ),
+                      );
+                      default:
+                        // if (snapshot.hasError) {
+                        //   debugPrint(snapshot.error.toString());
+                        //   return Text('Error: ${snapshot.error}');
+                        // }
+                        // else
+                        if (snapshot.hasError) {
+                          debugPrint(snapshot.error.toString());
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        else if(snapshot.data!.results!.length != 0)
+                          return Expanded(
+                              child: ListView.builder(
+                                  itemCount: snapshot.data!.results!.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          normalShift(
+                                              context,
+                                              DetailsScreen(
+                                                imagePath: paths[index],
+                                                text: texts[index],
+                                              ));
+                                        },
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              minHeight: 100, maxHeight: 120),
+                                          child: Container(
+                                            child: Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: AssetImage(
+                                                                  paths[index],
+                                                                ),
+                                                                fit: BoxFit.cover),
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                10)),
                                                       ),
-                                                      fit: BoxFit.cover),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                            flex: 1,
-                                          ),
-                                          SizedBox(
-                                            width: 11,
-                                          ),
-                                          Flexible(
-                                            flex: 2,
-                                            child: Container(
-                                              child: Text(
-                                                texts[index],
-                                                style: TextStyle(
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    color: Colors.black,
-                                                    fontSize: adaptiveTextSize
-                                                        .getAdaptiveTextSize(
-                                                            15, context)),
-                                                maxLines: 5,
+                                                      flex: 1,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 11,
+                                                    ),
+                                                    Flexible(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        child: Text(
+                                                          texts[index],
+                                                          style: TextStyle(
+                                                              overflow:
+                                                              TextOverflow.ellipsis,
+                                                              color: Colors.black,
+                                                              fontSize: adaptiveTextSize
+                                                                  .getAdaptiveTextSize(
+                                                                  15, context)),
+                                                          maxLines: 5,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
+                                            height: height * 0.19,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 3,
+                                                      spreadRadius: 1)
+                                                ]),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  height: height * 0.19,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey,
-                                            blurRadius: 3,
-                                            spreadRadius: 1)
-                                      ]),
-                                ),
-                              ),
-                            ),
-                          );
-                        }))
+                                    );
+                                  }));
+                        else
+                          return Expanded(child: Center(
+                            child: Text("no_elements".tr() , style: TextStyle(
+                              fontSize: 25
+                            )),
+                          ));
+                    }
+                  },
+                ),),
+
+
               ],
             ),
           )),

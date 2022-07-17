@@ -43,7 +43,7 @@ showMyBottomSheet({double? width, double? height, BuildContext? context}) {
                       title: Text("gallery".tr()),
                       leading: Icon(Icons.image),
                       onTap: () {
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                         ImagePicker()
                             .pickImage(source: ImageSource.gallery)
                             .then((value) =>

@@ -2,17 +2,24 @@
 
 class DefaultResponse {
   DefaultResponse({
-      String? message,}){
+    String? message,
+  }) {
     _message = message;
-}
+  }
 
   DefaultResponse.fromJson(dynamic json) {
     _message = json['message'];
   }
+
   String? _message;
-DefaultResponse copyWith({  String? message,
-}) => DefaultResponse(  message: message ?? _message,
-);
+
+  DefaultResponse copyWith({
+    String? message,
+  }) =>
+      DefaultResponse(
+        message: message ?? _message,
+      );
+
   String? get message => _message;
 
   Map<String, dynamic> toJson() {
@@ -20,5 +27,4 @@ DefaultResponse copyWith({  String? message,
     map['message'] = _message;
     return map;
   }
-
 }

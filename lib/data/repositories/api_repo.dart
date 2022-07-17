@@ -1,10 +1,10 @@
 import 'package:asar_app/data/models/default_response.dart';
 import 'package:asar_app/data/models/register_request.dart';
 
-import '../api_provider/registration_api.dart';
+import '../api_provider/api_provider.dart';
 
 class RegistrationRepository {
-  final _provider = RegistrationApiProvider();
+  final _provider = ApiProvider();
 
   Future<DefaultResponse> register(
       {String? password, String? userName, String? confirmPassword}) {

@@ -1,7 +1,6 @@
 import 'package:asar_app/constants/colors.dart';
-import 'package:asar_app/screens/home_screen.dart';
+import 'package:asar_app/data/api_provider/api_provider.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
-import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:asar_app/widgets/row_of_create_acc.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,7 +9,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/registration_provider.dart';
+import '../utils/navigation_funs.dart';
 import '../widgets/button.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -89,43 +90,50 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: height * 0.018,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("forget_password".tr(),
-                          style: TextStyle(
-                              color: secondColor,
-                              fontSize: adaptiveTextSize.getAdaptiveTextSize(
-                                  15, context),
-                              fontWeight: FontWeight.w600)),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Text("forget_password".tr(),
+                  //         style: TextStyle(
+                  //             color: secondColor,
+                  //             fontSize: adaptiveTextSize.getAdaptiveTextSize(
+                  //                 15, context),
+                  //             fontWeight: FontWeight.w600)),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: height * 0.018,
                   ),
-                  Consumer<RegistrationProvider>(builder: (context, loginProvider , child){
-                    return GestureDetector(
-                        onTap: () async {
-                          loginProvider.login(
-                              userName: userNameController.text,
-                              password: passwordController.text);
-                          if (_formKey.currentState!.validate() &&
-                              loginProvider.loginLoading) {
+                  GestureDetector(
+                      onTap: () async {
+                        await ApiProvider()
+                            .login(
+                                userName: userNameController.text,
+                                password: passwordController.text)
+                            .then((value) {
+                          if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   duration: Duration(seconds: 2),
-                                  content: Text(
-                                    loginProvider.loginResponse.message
-                                        .toString(),
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  backgroundColor: mainColor),
+                                  content: value.message.toString() == "Success"
+                                      ? Text(
+                                          "success_message".tr(),
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      : Text(
+                                          "error_message".tr(),
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                  backgroundColor:
+                                      value.message.toString() == "Success"
+                                          ? mainColor
+                                          : Colors.red),
                             );
                             shiftByReplacement(context, HomeScreen());
                           }
-                        },
-                        child: myButton(title: "login", context: context));
-                  }),
+                        });
+                      },
+                      child: myButton(title: "login", context: context)),
                   SizedBox(
                     height: height * 0.025,
                   ),

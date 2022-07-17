@@ -6,25 +6,31 @@ import 'package:flutter/material.dart';
 import '../utils/adaptive_text_size.dart';
 import '../widgets/my_back_button.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final File? image;
+  final String? result;
 
-  const ResultScreen({Key? key, this.image}) : super(key: key);
+  const ResultScreen({Key? key, this.image, this.result}) : super(key: key);
 
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
+      body: widget.result != "response" ? Column(
         children: [
           Stack(
             children: [
               Container(
                 width: double.infinity,
                 height: height * 0.35,
-                child: Image.file(image!),
+                child: Image.file(widget.image!),
               ),
               Positioned(
                   left: Localizations.localeOf(context).languageCode == "ar"
@@ -52,8 +58,7 @@ class ResultScreen extends StatelessWidget {
                 child: Container(
                   color: Colors.transparent,
                   child: SelectableText(
-                    "إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقعإذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقعإذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقعإذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقعإذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع"
-                    "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.",
+                    widget.result!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: adaptiveTextSize.getAdaptiveTextSize(
@@ -63,6 +68,38 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
           )
+        ],
+      ) : Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: height * 0.35,
+                child: Image.file(widget.image!),
+              ),
+              Positioned(
+                  left: Localizations.localeOf(context).languageCode == "ar"
+                      ? null
+                      : 15,
+                  right: Localizations.localeOf(context).languageCode == "ar"
+                      ? 15
+                      : null,
+                  top: 30,
+                  child: myBackButton(
+                    height: height,
+                    width: width,
+                    context: context,
+                  ))
+            ],
+          ),
+          Expanded(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: mainColor,
+              ),
+            ),
+          ),
         ],
       ),
     );

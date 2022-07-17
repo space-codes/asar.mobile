@@ -1,4 +1,4 @@
-import 'package:asar_app/data/api_provider/registration_api.dart';
+import 'package:asar_app/data/api_provider/api_provider.dart';
 import 'package:asar_app/data/models/default_response.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +8,9 @@ class RegistrationProvider with ChangeNotifier {
   bool loginLoading = false;
   bool registerLoading = false;
 
-  login({password, userName}) async {
+  Future login({password, userName}) async {
     loginLoading = true;
-    loginResponse = await RegistrationApiProvider()
+    loginResponse = await ApiProvider()
         .login(userName: userName, password: password);
     loginLoading = false;
 
@@ -19,7 +19,7 @@ class RegistrationProvider with ChangeNotifier {
 
   register({password, userName, confirmPassword}) async {
     registerLoading = true;
-    registerResponse = await RegistrationApiProvider().register(
+    registerResponse = await ApiProvider().register(
         password: password,
         confirmPassword: confirmPassword,
         userName: userName);

@@ -11,6 +11,9 @@
   "gmail": "Gmail",
   "don't_have_account" : "Don't have account?",
   "sign_up": "Sign up",
+  "error_message": "Please check your login details...",
+  "success_message": "You are logged in successfully...",
+
 
 
   "--" : "------------Register Screen-----------",
@@ -26,5 +29,8 @@
   "add_manuscript" : "Add manuscript",
   "history": "History",
   "camera" : "Camera",
-  "gallery": "Gallery"
+  "gallery": "Gallery",
+  "no_elements": "There are no items to display",
+  "logout": "You are logged out successfully..."
+
 }
