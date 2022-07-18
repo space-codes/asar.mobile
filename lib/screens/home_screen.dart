@@ -209,8 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     DecorationImage(
                                                                         image:
                                                                             NetworkImage(
-                                                                          "$homeUrl${result.image!}",
-                                                                        ),
+                                                                          "$homeUrl${result.image!}",),
                                                                         fit: BoxFit
                                                                             .cover),
                                                                 borderRadius:

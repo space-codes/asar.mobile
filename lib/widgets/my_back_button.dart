@@ -10,7 +10,7 @@ Widget myBackButton({BuildContext? context, double? width, double? height}) {
       //   MaterialPageRoute(builder: (context) => HomeScreen()),
       //       (Route<dynamic> route) => false,
       // );
-      Navigator.pop(context!);
+      Navigator.pop(context! , true);
       //popShift(context!);
     },
     child: Container(
