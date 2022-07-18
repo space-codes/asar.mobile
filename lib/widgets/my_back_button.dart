@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 Widget myBackButton({BuildContext? context, double? width, double? height}) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushAndRemoveUntil(
-        context!,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-            (Route<dynamic> route) => false,
-      );
+      // Navigator.pushAndRemoveUntil(
+      //   context!,
+      //   MaterialPageRoute(builder: (context) => HomeScreen()),
+      //       (Route<dynamic> route) => false,
+      // );
+      Navigator.pop(context!);
       //popShift(context!);
     },
     child: Container(

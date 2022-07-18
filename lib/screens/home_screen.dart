@@ -75,9 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           backgroundColor: mainColor),
                     );
-                    // await ApiProvider().logout().then((value){
-                    //   shiftByReplacement(context, LoginScreen());
-                    // });
                   },
                   icon: Icon(
                     Icons.logout,
@@ -188,8 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           normalShift(
                                               context,
                                               DetailsScreen(
-                                                imagePath: result.image,
-                                                text: result.result,
+                                                imagePath: "$homeUrl${result.image!}",
+                                                text: result.result!.replaceAll('<br>', '\n').toString(),
                                               ));
                                         },
                                         child: ConstrainedBox(
@@ -202,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     const EdgeInsets.all(4.0),
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Flexible(
                                                       child: Container(
@@ -230,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       flex: 2,
                                                       child: Container(
                                                         child: Text(
-                                                          result.result!,
+                                                          result.result!.replaceAll('<br>', '\n').toString(),
                                                           style: TextStyle(
                                                               overflow:
                                                                   TextOverflow
