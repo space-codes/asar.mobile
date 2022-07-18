@@ -25,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
                   height: height * 0.35,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(imagePath.toString()),
+                          image: NetworkImage(imagePath.toString()),
                           fit: BoxFit.cover)),
                 ),
                 Positioned(
@@ -35,7 +35,7 @@ class DetailsScreen extends StatelessWidget {
                     right: Localizations.localeOf(context).languageCode == "ar"
                         ? 15
                         : null,
-                    top: 10,
+                    top: 35,
                     child: myBackButton(
                         height: height, width: width, context: context))
               ],

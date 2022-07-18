@@ -1,17 +1,14 @@
 import 'package:asar_app/constants/colors.dart';
-import 'package:asar_app/providers/registration_provider.dart';
 import 'package:asar_app/screens/login_screen.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import '../data/api_provider/api_provider.dart';
 import '../utils/navigation_funs.dart';
 import '../widgets/button.dart';
-import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -35,9 +32,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    final RegistrationProvider? registrationProvider =
-        Provider.of<RegistrationProvider>(context);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -102,8 +96,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   GestureDetector(
                       onTap: () async {
-                        await ApiProvider().register(userName: userNameController.text,
-                            password: passwordController.text , confirmPassword: confirmPasswordController.text).then((value){
+                        await ApiProvider()
+                            .register(
+                                userName: userNameController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text)
+                            .then((value) {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -117,7 +115,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             shiftByReplacement(context, LoginScreen());
                           }
                         });
-
 
                         // registrationProvider!.register(
                         //     userName: userNameController.text,

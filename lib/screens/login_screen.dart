@@ -1,4 +1,5 @@
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/constants/global_vars.dart';
 import 'package:asar_app/data/api_provider/api_provider.dart';
 import 'package:asar_app/utils/adaptive_text_size.dart';
 import 'package:asar_app/widgets/row_of_create_acc.dart';
@@ -6,9 +7,7 @@ import 'package:asar_app/widgets/text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/registration_provider.dart';
 import '../utils/navigation_funs.dart';
 import '../widgets/button.dart';
 import 'home_screen.dart';
@@ -31,9 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    final RegistrationProvider? registrationProvider =
-        Provider.of<RegistrationProvider>(context);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -111,11 +107,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 userName: userNameController.text,
                                 password: passwordController.text)
                             .then((value) {
+                          cookie = value.message!;
+                          debugPrint("----------" + cookie);
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   duration: Duration(seconds: 2),
-                                  content: value.message.toString() == "Success"
+                                  content: value.message.toString().length > 15
                                       ? Text(
                                           "success_message".tr(),
                                           style: TextStyle(color: Colors.white),
@@ -125,11 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                   backgroundColor:
-                                      value.message.toString() == "Success"
+                                      value.message.toString().length > 15
                                           ? mainColor
                                           : Colors.red),
                             );
-                            shiftByReplacement(context, HomeScreen());
+                            value.message.toString().length > 15 ? shiftByReplacement(context, HomeScreen()) : null;
                           }
                         });
                       },

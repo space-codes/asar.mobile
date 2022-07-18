@@ -1,36 +1,45 @@
+import 'dart:io';
+
+import 'package:asar_app/constants/global_vars.dart';
 import 'package:asar_app/constants/strings.dart';
 import 'package:asar_app/data/models/default_response.dart';
 import 'package:asar_app/data/models/home_response.dart';
 import 'package:asar_app/data/models/login_request.dart';
 import 'package:asar_app/data/models/register_request.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class ApiProvider {
-  final Dio _dio_for_post = Dio(BaseOptions(baseUrl: baseUrl, headers: {
-    'Content-Type': 'application/json',
-  }));
-  final Dio _dio_for_get = Dio(BaseOptions(
+
+
+
+
+  final Dio dio = Dio(BaseOptions(
     baseUrl: baseUrl,
     validateStatus: (_) => true,
     contentType: Headers.jsonContentType,
     responseType: ResponseType.json,
   ));
 
+
+
   Future<DefaultResponse> login(
       {required String password, required String userName}) async {
     debugPrint("****** From login request model ----> ${userName} ***********");
-
-    Response response = await _dio_for_post.post('auth/login',
+    String message = "" ;
+    Response response = await dio.post('auth/login',
         data:
-            LoginRequestModel(password: password, username: userName).toJson());
+        LoginRequestModel(password: password, username: userName).toJson());
 
     if (response.statusCode == 200) {
-      print(await response.data.toString());
+      var test = await response.headers['set-cookie']?[0];
+      message = test!.substring(8, test.length-18);
+      print(message);
     } else {
       print(response.statusMessage);
     }
-    return DefaultResponse(message: response.data.toString());
+    return DefaultResponse(message: message);
   }
 
   Future<DefaultResponse> register(
@@ -38,11 +47,11 @@ class ApiProvider {
     debugPrint(
         "****** From register request model ----> ${userName} ***********");
 
-    Response response = await _dio_for_post.post("auth/register",
+    Response response = await dio.post("auth/register",
         data: RegisterRequestModel(
-                confirmPassword: confirmPassword,
-                password: password,
-                username: userName)
+            confirmPassword: confirmPassword,
+            password: password,
+            username: userName)
             .toJson());
 
     if (response.statusCode == 200) {
@@ -54,7 +63,7 @@ class ApiProvider {
   }
 
   Future<DefaultResponse> logout() async {
-    Response response = await _dio_for_post.post(
+    Response response = await dio.post(
       'auth/logout',
     );
 
@@ -68,20 +77,43 @@ class ApiProvider {
     return DefaultResponse.fromJson(response);
   }
 
-  Future<DefaultResponse> predict({required String image}) async {
-    Response response =
-        await _dio_for_post.post('predict', data: {"image": image});
+  // Future<DefaultResponse> predict({required String image}) async {
+  //   Response response =
+  //       await _dio_for_post.post('predict', data: {"image": "data:image/png;base64,$image"});
+  //   debugPrint("****** From predict request model ***********");
+  //   if (response.statusCode == 200) {
+  //     print(await response.data.toString());
+  //   } else {
+  //     print(response.statusMessage);
+  //   }
+  //   return DefaultResponse.fromJson(response);
+  // }
+
+  Future<DefaultResponse> predict({required File image}) async {
+    dio.options.headers = {
+      "Cookie" :"session=$cookie"
+    };
+    FormData formData = FormData.fromMap({
+      "image":
+      await MultipartFile.fromFile(image.path, filename: "fileName"),
+    });
+
+    Response response = await dio.post('predict', data: formData);
     debugPrint("****** From predict request model ***********");
     if (response.statusCode == 200) {
       print(await response.data.toString());
     } else {
       print(response.statusMessage);
     }
-    return DefaultResponse.fromJson(response);
+    return DefaultResponse(message: response.data.toString());
   }
 
   Future<HomeResponse> home() async {
-    Response response = await _dio_for_get.get('home');
+    dio.options.headers = {
+      "Cookie" :"session=$cookie"
+    };
+    Response response = await dio.get('home');
+
     debugPrint("****** From home request model ***********");
     if (response.statusCode == 200) {
       print(await response.data.toString());

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:asar_app/data/api_provider/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,18 +34,13 @@ cropImage(
             title: 'أثار',
           ))
       .then((imageAsFile) async {
-    List<int> imageBytes = imageAsFile!.readAsBytesSync();
-    print(imageBytes);
-    String base64Image = base64Encode(imageBytes);
-    print(base64Image);
-      normalShift(
-          context!,
-          ResultScreen(
-            image: imageAsFile,
-            result: "response",
-          ));
+    normalShift(
+        context!,
+        ResultScreen(
+          image: imageAsFile,
+        ));
 
-    // await ApiProvider().predict(image: base64Image).then((response) {
+    // await ApiProvider().predict(image: imageAsFile!).then((response) {
     //   normalShift(
     //       context!,
     //       ResultScreen(

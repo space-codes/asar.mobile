@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.white,
+    statusBarColor: mainColor,
   ));
   List<SingleChildWidget> providers = [
     ChangeNotifierProvider<RegistrationProvider>(
