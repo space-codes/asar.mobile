@@ -18,9 +18,11 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+
+  late Future<DefaultResponse> prediction_result ;
   @override
   void initState() {
-    _postPredictData(image: widget.image);
+    prediction_result = _postPredictData(image: widget.image);
     super.initState();
     setState(() {});
   }
@@ -36,12 +38,13 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         body: FutureBuilder<DefaultResponse>(
-          future: _postPredictData(), // async work
+          future: prediction_result, // async work
           builder:
               (BuildContext context, AsyncSnapshot<DefaultResponse> snapshot) {
 
-            String? msg = snapshot.data?.message;
-            print("////////////////"+msg.toString());
+            String? msg = snapshot.data?.message ?? 'Loading...';
+            msg = msg.replaceAll('<br>', '\n').toString();
+            print("////////////////"+msg);
 
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -71,7 +74,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         child: Container(
                           color: Colors.transparent,
                           child: SelectableText(
-                            snapshot.data!.message.toString(),
+                            msg,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: adaptiveTextSize.getAdaptiveTextSize(
@@ -96,7 +99,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         child: Container(
                           color: Colors.transparent,
                           child: SelectableText(
-                            snapshot.data!.message!,
+                            msg,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: adaptiveTextSize.getAdaptiveTextSize(

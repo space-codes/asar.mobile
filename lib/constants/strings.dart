@@ -11,3 +11,5 @@
 //const String baseUrl ="https://asar.loca.lt/api/";
 
 const String baseUrl = "https://5d98-197-38-24-234.eu.ngrok.io/api/";
+
+const String homeUrl = "https://5d98-197-38-24-234.eu.ngrok.io/";

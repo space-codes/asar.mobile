@@ -1,4 +1,5 @@
 import 'package:asar_app/constants/colors.dart';
+import 'package:asar_app/constants/strings.dart';
 import 'package:asar_app/data/api_provider/api_provider.dart';
 import 'package:asar_app/data/models/home_response.dart';
 import 'package:asar_app/data/models/language_model.dart';
@@ -211,8 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     DecorationImage(
                                                                         image:
                                                                             NetworkImage(
-                                                                          result
-                                                                              .image!,
+                                                                          "$homeUrl${result.image!}",
                                                                         ),
                                                                         fit: BoxFit
                                                                             .cover),

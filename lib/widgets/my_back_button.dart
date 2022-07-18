@@ -1,10 +1,16 @@
+import 'package:asar_app/screens/home_screen.dart';
 import 'package:asar_app/utils/navigation_funs.dart';
 import 'package:flutter/material.dart';
 
 Widget myBackButton({BuildContext? context, double? width, double? height}) {
   return GestureDetector(
     onTap: () {
-      popShift(context!);
+      Navigator.pushAndRemoveUntil(
+        context!,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+            (Route<dynamic> route) => false,
+      );
+      //popShift(context!);
     },
     child: Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) , color: Colors.white),
