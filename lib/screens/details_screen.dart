@@ -2,6 +2,7 @@ import 'package:asar_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/adaptive_text_size.dart';
+import '../widgets/buildDialog.dart';
 import '../widgets/my_back_button.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -21,12 +22,17 @@ class DetailsScreen extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  height: height * 0.35,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(imagePath.toString()),
-                          fit: BoxFit.cover)),
+                GestureDetector(
+                  onTap: (){
+                    showMyDialog(context , imagePath.toString());
+                  },
+                  child: Container(
+                    height: height * 0.35,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(imagePath.toString()),
+                            fit: BoxFit.cover)),
+                  ),
                 ),
                 Positioned(
                     left: Localizations.localeOf(context).languageCode == "ar"
@@ -66,4 +72,5 @@ class DetailsScreen extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -9,7 +9,7 @@ import '../utils/adaptive_text_size.dart';
 import '../widgets/my_back_button.dart';
 
 class ResultScreen extends StatefulWidget {
-  File? image;
+  final File? image;
 
   ResultScreen({Key? key, this.image}) : super(key: key);
 
@@ -18,8 +18,8 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  late Future<DefaultResponse> prediction_result;
 
-  late Future<DefaultResponse> prediction_result ;
   @override
   void initState() {
     prediction_result = _postPredictData(image: widget.image);
@@ -41,10 +41,9 @@ class _ResultScreenState extends State<ResultScreen> {
           future: prediction_result, // async work
           builder:
               (BuildContext context, AsyncSnapshot<DefaultResponse> snapshot) {
-
             String? msg = snapshot.data?.message ?? 'Loading...';
             msg = msg.replaceAll('<br>', '\n').toString();
-            print("////////////////"+msg);
+            print("////////////////" + msg);
 
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -85,7 +84,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ],
                 );
-                default:
+              default:
                 return Column(
                   children: [
                     buildStackOfImage(height, context, width),
@@ -204,10 +203,15 @@ class _ResultScreenState extends State<ResultScreen> {
   Stack buildStackOfImage(double height, BuildContext context, double width) {
     return Stack(
       children: [
-        Container(
-          width: double.infinity,
-          height: height * 0.35,
-          child: Image.file(widget.image!, fit: BoxFit.cover),
+        GestureDetector(
+          onTap: (){
+            showMyDialog(context , widget.image!,);
+          },
+          child: Container(
+            width: double.infinity,
+            height: height * 0.35,
+            child: Image.file(widget.image!, fit: BoxFit.cover),
+          ),
         ),
         Positioned(
             left: Localizations.localeOf(context).languageCode == "ar"
@@ -223,6 +227,22 @@ class _ResultScreenState extends State<ResultScreen> {
               context: context,
             ))
       ],
+    );
+  }
+
+  Future<void> showMyDialog(BuildContext context, File? imagePath,) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              width: MediaQuery.of(context).size.width * 0.7,
+              color: Colors.transparent,
+              child:Image.file(imagePath!, fit: BoxFit.fill)
+          ),
+        );
+      },
     );
   }
 }
